@@ -1,4 +1,4 @@
 TMSEG2
 ======
 
-Stable version: `2.0.2`
+Stable version: `2.1.0`
