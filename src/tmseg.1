@@ -1,0 +1,113 @@
+.\" Process this file with
+.\" groff -man -Tascii foo.1
+.\"
+.TH TMSEG 1 "2015-11-11" 2.1.0-1 "User Commands"
+.SH NAME
+tmseg \- predict transmembrane helices in proteins
+.SH SYNOPSIS
+.B tmseg
+[OPTIONS]
+.SH DESCRIPTION
+.B tmseg
+predicts transmembrane proteins, the position of their transmembrane
+helices, and their topology within the membrane. It also predicts
+signal peptides.
+.LP
+.B tmseg
+requires a sequence profile (PSSM) to make a prediction. This profile
+can be generated with PSI-BLAST (
+.B blastpgp
+). The recommended parameters for such a profile are an e-value threshold
+of 1e\-3 for the profile (\-h 0.001), three iterations (\-j 3), and a
+deactivated low complexity filter (\-F F). A database of all proteins from
+SWISS-PROT, TrEMBL (http://www.uniprot.org/), and PDB (http://www.pdb.org),
+reduced to 80% sequence identity, was used during the evaluation.
+.LP
+Sample call:
+.br
+.B blastpgp
+\-F F \-a 1 \-j 3 \-b 3000 \-e 1 \-h 0.001 \-d <database> \-i query.fasta \-Q query.pssm
+.LP
+In addition,
+.B tmseg
+can be used to refine predictions made by other programs. In this case
+the predicted structure must be included in the input fasta file, and
+the header, sequence, and structure must be in one line each. Transmembrane
+helices must be indicated by 'H', signal peptides by 'S', and re-entrant
+regions by 'L'. All other characters are considered non-membrane residues.
+.LP
+Sample fasta file with previous prediction:
+.br
+>RND1680 Randomly generated sequence
+.br
+MSRPADRILAEYCDVGMQTSHNGWREILAFVTEASKLVTKYIGKALGNVSLQDEIMKLPFP
+.br
+SSSSSSSSSSSS2222222222HHHHHHHHHHHHHH11111111HHHHHHHHHHHHH2222
+.SH OPTIONS
+.B Mandatory arguments (one output file is sufficient)
+.LP
+.IP \-i
+Input fasta file with header and sequence.
+.IP \-p
+Input file with the sequence profile (PSSM).
+.IP \-o
+Output file (human readable format).
+.IP \-r
+Output file with raw output from the machine-learning tools.
+.LP
+.B Optional arguments
+.LP
+.IP \-m
+Runs TMSEG for multiple input files (see 'multiple input files' below).
+.IP \-x
+Refine a previous prediction (must be provided in the fasta file).
+.IP \-t
+Refine only the topology of a previous prediction (\-x must be set).
+.SH MULTIPLE INPUT FILES
+If the \-m flag is activated, the input and output paths will be
+interpreted as directories. TMSEG will then search for all .fasta
+files within the fasta input path (\-i). The pssm input path (\-p)
+must contain .pssm files with the same names as the fasta files.
+The output files will be generated in the specified output paths.
+They have the same namesas the input files with the .tmseg (\-o)
+and .tmseg-raw (\-r) file extensions.
+.SH EXAMPLES
+.B tmseg
+\-i query.fasta \-p query.pssm \-o query.tmseg
+.RS
+Minimal call for a standard prediction.
+.RE
+.LP
+.B tmseg
+\-i query.tmseg \-p query.pssm \-o query_refined.tmseg \-r query_refined.raw \-x
+.RS
+Refines a previous prediction made by
+.B tmseg
+(created with \-o query.tmseg) and creates the standard and raw output.
+.RE
+.SH FILES
+.I /usr/share/tmseg/TMSEG.jar
+(default)
+.RS
+Runnable jar file that implements the tmseg method.
+.RE
+.LP
+.I /usr/share/tmseg/models/*.model
+(default)
+.RS
+Weka model files for the random forests (hIndexer, tPredictor)
+and the neural network (hPredictor). These files must be in a
+subfolder (named 'models') relative to the TMSEG.jar file.
+.RE
+.LP
+.I /usr/share/tmseg/examples/*
+(default)
+.RS
+Example input and output files generated with the two example calls (see above).
+.RE
+.SH BUGS
+Please report bugs to Michael Bernhofer (see below).
+.SH AUTHOR
+Michael Bernhofer <michael.bernhofer@mytum.de>
+.SH "SEE ALSO"
+.BR blastpgp (1)

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+prefix=@prefix@
+
+java -jar @datarootdir@/@PACKAGE@/tmseg.jar "$@"
