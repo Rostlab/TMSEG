@@ -34,7 +34,7 @@ This jar can easily be executed with java with some examples provided in the /ex
 
 The project can be loaded from eclipse (a .project and .classpath were added by us)
 
-Because of JAVA portability, the program works under any OS that can run a JVM.
+Because of JAVA portability, the program works under any OS that can run a JVM (Java >= 7).
 * WINDOWS : OK JRE8
 * DEBIAN : OK
 * UBUNTU : OK OpenJDK
