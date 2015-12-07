@@ -59,6 +59,15 @@ TODO
 
 TODO
 
+@Berhnhofer wrote:
+
+```
+I do have a dataset of transmembrane and soluble proteins, split into four equal parts. Split 1-3 are used for three-fold cross-training and cross-validation to optimize TMSEG's parameters. Split 4 is used at the end for the final (reported) performance.
+Though v2.1.0's reported performance is only slithly different from v2.0.0, it is more robust when using different databases for the PSSM profiles.
+
+I do have some java code for the training/optimization/validation, but not everything of it is completely automated. I can also give you the dataset and PSSM profiles if you want them, though I do not think they should be in the repository (over a thousand protein files and multiple PSSM profiles per protein).
+```
+
 ### Programming Language
 
 Program installable with autotools for linux platforms.
