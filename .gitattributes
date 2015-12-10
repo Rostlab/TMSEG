@@ -1,3 +1,4 @@
 *.deb filter=lfs diff=lfs merge=lfs -text
 *.orig.tar.gz filter=lfs diff=lfs merge=lfs -text
 *.model filter=lfs diff=lfs merge=lfs -text
+supplementary/dataset-and-validation.tar.gz filter=lfs diff=lfs merge=lfs -text
