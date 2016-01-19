@@ -53,7 +53,7 @@ A second version (TMSEG 2) was released by Michael in november 2015 on https://g
 
 ### Publications
 
-TODO
+The paper is not yet published (curretly in progress).
 
 ### Training/Test Data
 
