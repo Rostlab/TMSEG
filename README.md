@@ -20,7 +20,12 @@ Then run `git lfs install` on each machine once. Then you don't need to worry ab
 
 ### Installation
 
-The program is precompiled into a .jar, no other installation needed
+Optional : you can choose to skip this step and use the pre-packed tmseg.jar in the first `/src/` folder
+
+A POM file lets you compile the latest version of the program with
+`maven install`
+
+The maven defaults will pack a jar file in the /target/ subdirectory.
 
 ## HOWTO RUN, Basics
 
