@@ -27,9 +27,11 @@ The program is precompiled into a .jar, no other installation needed
 Once pulled with git-lfs, you will find tmseg.jar in the first /src/ folder
 This jar can easily be executed with java with some examples provided in the /example folder:
 
-``cd src/ ``
-``java -jar tmseg.jar -i examples/query.fasta -p examples/query.pssm -o tests/query.out``
-``cat tests/query.out``
+```shell
+cd src/ 
+java -jar tmseg.jar -i examples/query.fasta -p examples/query.pssm -o tests/query.out
+cat tests/query.out
+```
 
 The project can be loaded from eclipse (a .project and .classpath were added by us)
 
