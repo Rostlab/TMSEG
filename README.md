@@ -114,10 +114,14 @@ These PSSMs mainly affected the recall of transmembrane proteins and helices. Th
 
 ## References :
 
-[1] L. Käll, A. Krogh, and E. L. Sonnhammer. An HMM posterior decoder for sequence feature prediction that includes homology information. Bioinformatics, 21 Suppl 1:i251–257, Jun 2005. [DOI:10.1093/bioinformatics/bti1014] [PubMed:15961464].
-[2] D. T. Jones. Improving the accuracy of transmembrane protein topology prediction using evolutionary information. Bioinformatics, 23(5):538–544, Mar 2007. [DOI:10.1093/bioinformatics/btl677] [PubMed:17237066].
+[1] L. Käll, A. Krogh, and E. L. Sonnhammer. An HMM posterior decoder for sequence feature prediction that includes homology information. Bioinformatics, 21 Suppl 1:i251–257, Jun 2005. [DOI:10.1093/bioinformatics/bti1014] [PubMed:15961464]
+
+[2] D. T. Jones. Improving the accuracy of transmembrane protein topology prediction using evolutionary information Bioinformatics, 23(5):538–544, Mar 2007. [DOI:10.1093/bioinformatics/btl677] [PubMed:17237066]
+
 [3] T Nugent, D. T. Jones. Transmembrane protein topology prediction using support vector machines. BMC Bioinformatics 2009;10:159. [DOI:10.1186/1471-2105-10-159] [PubMed:19470175]
-[4] B. Rost, P. Fariselli, and R. Casadio. Topology prediction for helical transmembrane proteins at 86% accuracy. Protein Sci., 5(8):1704–1718, Aug 1996. [DOI:10.1002/pro.5560050824] [PubMed:8844859] [PubMed Central:PMC2143485].
+
+[4] B. Rost, P. Fariselli, and R. Casadio. Topology prediction for helical transmembrane proteins at 86% accuracy. Protein Sci., 5(8):1704–1718, Aug 1996. [DOI:10.1002/pro.5560050824] [PubMed:8844859] [PubMed Central:PMC2143485]
+
 [5] UniProt C. UniProt: a hub for protein information. Nucleic Acids Res. 2015, 43:D204-212. [DOI:10.1093/nar/gku989] [PubMed:25348405] [PubMed Central:PMC4384041]
 
 ## Other notes :
