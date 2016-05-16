@@ -35,6 +35,11 @@ public class Processing {
 	 * Processes a list of proteins.
 	 * 
 	 * @param proteins
+	 * @param onlyTmp
+	 * @param minLength
+	 * @param wSol
+	 * @param wTmh
+	 * @param wSig
 	 */
 	public static void process(List<Protein> proteins, boolean onlyTmp, int minLength, int wSol, int wTmh, int wSig)
 	{
@@ -49,6 +54,11 @@ public class Processing {
 	 * Processes a protein.
 	 * 
 	 * @param protein
+	 * @param onlyTmp
+	 * @param minLength
+	 * @param wSol
+	 * @param wTmh
+	 * @param wSig
 	 */
 	public static void process(Protein protein, boolean onlyTmp, int minLength, int wSol, int wTmh, int wSig)
 	{
@@ -123,8 +133,7 @@ public class Processing {
 	
 	/**
 	 * Refines the signal peptide prediction by removing short 
-	 * signal peptides (less than 4 residues) and those with 
-	 * a moderate signal for a transmembrane helix.
+	 * signal peptides (less than 4 consecutive residues).
 	 * 
 	 * @param prediction
 	 * @param lastSPIndex
@@ -138,13 +147,7 @@ public class Processing {
 		{
 			char type = prediction[i];
 			
-			if (Mappings.ssToInt(type) == Mappings.indexTmh)
-			{
-				hasSignalPeptide = false;
-				
-				break;
-			}
-			else if (Mappings.ssToInt(type) == Mappings.indexSignal)
+			if (Mappings.ssToInt(type) == Mappings.indexSignal)
 			{
 				int start = i;
 				
@@ -152,7 +155,12 @@ public class Processing {
 				
 				--i;
 				
-				if ((i - start + 1) >= 4) {hasSignalPeptide = true;}
+				if ((i - start + 1) >= 4)
+				{
+					hasSignalPeptide = true;
+					
+					break;
+				}
 			}
 		}
 		
@@ -182,6 +190,7 @@ public class Processing {
 	 * Removes all predicted TMHs which are shorter than the minimal size.
 	 * 
 	 * @param protein
+	 * @param minLength
 	 */
 	private static boolean cutShortHelices(Protein protein, int minLength)
 	{
@@ -193,9 +202,10 @@ public class Processing {
 		{
 			if (Mappings.ssToInt(prediction[i]) == Mappings.indexTmh)
 			{
-				int start = i;
+				int 	start 	= i;
+				char 	type 	= prediction[i];
 				
-				while (i < prediction.length && Mappings.ssToInt(prediction[i]) == Mappings.indexTmh) {++i;}
+				while (i < prediction.length && prediction[i] == type) {++i;}
 				
 				int length = i - start;
 				
@@ -408,6 +418,72 @@ public class Processing {
 		}
 		
 		return newStructure;
+	}
+	
+	
+	/**
+	 * Assigns confidence scores to all predicted TMH within a list of proteins.
+	 * 
+	 * @param proteins
+	 */
+	public static void assignConfidence(List<Protein> proteins)
+	{
+		for (Protein protein : proteins)
+		{
+			assignConfidence(protein);
+		}
+	}
+	
+	
+	/**
+	 * Assigns confidence scores to all predicted TMH within a protein.
+	 * 
+	 * @param protein
+	 */
+	public static void assignConfidence(Protein protein)
+	{
+		if (protein == null) {return;}
+		
+		int[] 	tmhScores 	= protein.getTmhRaw();
+		int[] 	solScores 	= protein.getSolRaw();
+		int[] 	segScores 	= protein.getSegmentRaw();
+		char[] 	prediction 	= protein.getPrediction();
+		
+		if (tmhScores == null || segScores == null || prediction == null) {return;}
+		
+		int[] confidence = new int[prediction.length];
+		
+		for (int i = 0; i < prediction.length; ++i)
+		{
+			char type = prediction[i];
+			
+			if (Mappings.ssToInt(type) == Mappings.indexTmh)
+			{
+				int conf 	= 0;
+				int start 	= i;
+				
+				while (i < prediction.length && prediction[i] == type)
+				{
+					conf += Math.max((tmhScores[i] - solScores[i] + 125) , segScores[i]);
+					
+					++i;
+				}
+				
+				int end = i;
+				
+				conf = conf / (end - start);
+				conf = conf / 100;
+				
+				for (int j = start; j < end; ++j)
+				{
+					confidence[j] = Math.min(9, conf);
+				}
+				
+				--i;
+			}
+		}
+		
+		protein.setConfidence(confidence);
 	}
 	
 	

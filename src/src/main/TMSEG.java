@@ -155,6 +155,8 @@ public class TMSEG {
 			doIndexing(protein);
 			doAdjustments(protein);
 			doTopology(protein);
+			
+			Processing.assignConfidence(protein);
 		}
 		//do post-processing only
 		else
@@ -209,14 +211,15 @@ public class TMSEG {
 	
 	private static void writeRefinedPrediction(Protein protein, String outFile)
 	{
-		char[] sequence 	= protein.getSequence();
-		char[] prediction 	= protein.getPrediction();
+		int[] 	confidence 	= protein.getConfidence();
+		char[] 	sequence 	= protein.getSequence();
+		char[] 	prediction 	= protein.getPrediction();
 		
 		if (sequence == null || prediction == null) {return;}
 		
 		StringBuilder segments = new StringBuilder();
 		
-		segments.append("# SEGMENT\tSTART\tEND\n");
+		segments.append("# SEGMENT\tSTART\tEND\tRI\n");
 		segments.append("##\n");
 		
 		for (int i = 0; i < prediction.length; ++i)
@@ -234,7 +237,11 @@ public class TMSEG {
 			
 			if (ss == Mappings.indexTmh)
 			{
-				segments.append("# TRANSMEM\t" + start + "\t" + end + "\n");
+				int ri = -1; //RI=-1 if no prediction was made (i.e. adjustment-mode only)
+				
+				if (confidence != null) {ri = confidence[start];}
+				
+				segments.append("# TRANSMEM\t" + start + "\t" + end + "\t" + ri + "\n");
 			}
 			else if (ss == Mappings.indexLoop)
 			{
@@ -256,7 +263,7 @@ public class TMSEG {
 				}
 				else
 				{
-					segments.append("# SOLUBLE\t" + start + "\t" + end + "\n");
+					segments.append("# NON-MEM\t" + start + "\t" + end + "\n");
 				}
 			}
 			else
@@ -383,25 +390,60 @@ public class TMSEG {
 	{
 		if (args == null || args.length < 1) {return false;}
 		
-		for (int i = 0; i < args.length; ++i)
+		int maxIndex = args.length - 1;
+		
+		for (int i = 0; i <= maxIndex; ++i)
 		{
 			String param = args[i].trim();
+			String value = null;
 			
-			if (param.equalsIgnoreCase("-i") && args.length > i+1)
+			if (param.equalsIgnoreCase("-i"))
 			{
-				fastaPath = new File(args[++i].trim()).getAbsolutePath();
+				if (i == maxIndex) {break;}
+				
+				value = args[i+1].trim();
+				
+				if (value.startsWith("-")) {continue;}
+				
+				fastaPath = new File(value).getAbsolutePath();
+				
+				++i;
 			}
-			else if (param.equalsIgnoreCase("-p") && args.length > i+1)
+			else if (param.equalsIgnoreCase("-p"))
 			{
-				pssmPath = new File(args[++i].trim()).getAbsolutePath();
+				if (i == maxIndex) {break;}
+				
+				value = args[i+1].trim();
+				
+				if (value.startsWith("-")) {continue;}
+				
+				pssmPath = new File(value).getAbsolutePath();
+				
+				++i;
 			}
-			else if (param.equalsIgnoreCase("-o") && args.length > i+1)
+			else if (param.equalsIgnoreCase("-o"))
 			{
-				outPath = new File(args[++i].trim()).getAbsolutePath();
+				if (i == maxIndex) {break;}
+				
+				value = args[i+1].trim();
+				
+				if (value.startsWith("-")) {continue;}
+				
+				outPath = new File(value).getAbsolutePath();
+				
+				++i;
 			}
-			else if (param.equalsIgnoreCase("-r") && args.length > i+1)
+			else if (param.equalsIgnoreCase("-r"))
 			{
-				outPathRaw = new File(args[++i].trim()).getAbsolutePath();
+				if (i == maxIndex) {break;}
+				
+				value = args[i+1].trim();
+				
+				if (value.startsWith("-")) {continue;}
+				
+				outPathRaw = new File(value).getAbsolutePath();
+				
+				++i;
 			}
 			else if (param.equalsIgnoreCase("-m"))
 			{

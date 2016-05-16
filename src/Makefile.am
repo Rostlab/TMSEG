@@ -1,11 +1,22 @@
 wekadir = $(pkgdatadir)/weka
 modelsdir = $(pkgdatadir)/models
 examplesdir = $(pkgdatadir)/examples
+jsource01dir = $(pkgdatadir)/src/data
+jsource02dir = $(pkgdatadir)/src/io
+jsource03dir = $(pkgdatadir)/src/main
+jsource04dir = $(pkgdatadir)/src/predictors
+jsource05dir = $(pkgdatadir)/src/processing
+jsource06dir = $(pkgdatadir)/src/util
 
 dist_bin_SCRIPTS = tmseg
 dist_pkgdata_SCRIPTS = tmseg.jar
-dist_pkgdata_DATA = tmseg.src.tar.gz
 dist_weka_DATA = weka/weka.jar
 dist_models_DATA = models/hIndexer.model models/hPredictor.model models/tPredictor.model
 dist_examples_DATA = examples/query.fasta examples/query.pssm examples/query.tmseg examples/query.raw examples/query_refined.tmseg examples/query_refined.raw
+dist_jsource01_DATA = src/data/FastaReader.java src/data/Protein.java src/data/Pssm.java src/data/Segment.java
+dist_jsource02_DATA = src/io/FReader.java src/io/FWriter.java src/io/ModelHandler.java
+dist_jsource03_DATA = src/main/TMSEG.java
+dist_jsource04_DATA = src/predictors/HelixIndexer.java src/predictors/HelixPredictor.java src/predictors/TopologyPredictor.java
+dist_jsource05_DATA = src/processing/Processing.java
+dist_jsource06_DATA = src/util/ErrorUtils.java src/util/Globals.java src/util/Mappings.java
 dist_man1_MANS = tmseg.1
