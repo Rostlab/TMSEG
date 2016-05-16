@@ -1,3 +1,9 @@
+tmseg (2.2.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Michael Bernhofer <michael.bernhofer@mytum.de>  Mon, 16 May 2016 18:10:00 +0100
+
 tmseg (2.1.0-1) unstable; urgency=low
 
   * New upstream release
