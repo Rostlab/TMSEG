@@ -80,8 +80,10 @@ POST_UNINSTALL = :
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(srcdir)/tmseg.in $(dist_bin_SCRIPTS) $(dist_pkgdata_SCRIPTS) \
-	$(dist_man1_MANS) $(dist_examples_DATA) $(dist_models_DATA) \
-	$(dist_pkgdata_DATA) $(dist_weka_DATA)
+	$(dist_man1_MANS) $(dist_examples_DATA) $(dist_jsource01_DATA) \
+	$(dist_jsource02_DATA) $(dist_jsource03_DATA) \
+	$(dist_jsource04_DATA) $(dist_jsource05_DATA) \
+	$(dist_jsource06_DATA) $(dist_models_DATA) $(dist_weka_DATA)
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -118,8 +120,10 @@ am__uninstall_files_from_dir = { \
   }
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkgdatadir)" \
 	"$(DESTDIR)$(man1dir)" "$(DESTDIR)$(examplesdir)" \
-	"$(DESTDIR)$(modelsdir)" "$(DESTDIR)$(pkgdatadir)" \
-	"$(DESTDIR)$(wekadir)"
+	"$(DESTDIR)$(jsource01dir)" "$(DESTDIR)$(jsource02dir)" \
+	"$(DESTDIR)$(jsource03dir)" "$(DESTDIR)$(jsource04dir)" \
+	"$(DESTDIR)$(jsource05dir)" "$(DESTDIR)$(jsource06dir)" \
+	"$(DESTDIR)$(modelsdir)" "$(DESTDIR)$(wekadir)"
 SCRIPTS = $(dist_bin_SCRIPTS) $(dist_pkgdata_SCRIPTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -143,8 +147,10 @@ am__can_run_installinfo = \
 man1dir = $(mandir)/man1
 NROFF = nroff
 MANS = $(dist_man1_MANS)
-DATA = $(dist_examples_DATA) $(dist_models_DATA) $(dist_pkgdata_DATA) \
-	$(dist_weka_DATA)
+DATA = $(dist_examples_DATA) $(dist_jsource01_DATA) \
+	$(dist_jsource02_DATA) $(dist_jsource03_DATA) \
+	$(dist_jsource04_DATA) $(dist_jsource05_DATA) \
+	$(dist_jsource06_DATA) $(dist_models_DATA) $(dist_weka_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
@@ -223,12 +229,23 @@ top_srcdir = @top_srcdir@
 wekadir = $(pkgdatadir)/weka
 modelsdir = $(pkgdatadir)/models
 examplesdir = $(pkgdatadir)/examples
+jsource01dir = $(pkgdatadir)/src/data
+jsource02dir = $(pkgdatadir)/src/io
+jsource03dir = $(pkgdatadir)/src/main
+jsource04dir = $(pkgdatadir)/src/predictors
+jsource05dir = $(pkgdatadir)/src/processing
+jsource06dir = $(pkgdatadir)/src/util
 dist_bin_SCRIPTS = tmseg
 dist_pkgdata_SCRIPTS = tmseg.jar
-dist_pkgdata_DATA = tmseg.src.tar.gz
 dist_weka_DATA = weka/weka.jar
 dist_models_DATA = models/hIndexer.model models/hPredictor.model models/tPredictor.model
 dist_examples_DATA = examples/query.fasta examples/query.pssm examples/query.tmseg examples/query.raw examples/query_refined.tmseg examples/query_refined.raw
+dist_jsource01_DATA = src/data/FastaReader.java src/data/Protein.java src/data/Pssm.java src/data/Segment.java
+dist_jsource02_DATA = src/io/FReader.java src/io/FWriter.java src/io/ModelHandler.java
+dist_jsource03_DATA = src/main/TMSEG.java
+dist_jsource04_DATA = src/predictors/HelixIndexer.java src/predictors/HelixPredictor.java src/predictors/TopologyPredictor.java
+dist_jsource05_DATA = src/processing/Processing.java
+dist_jsource06_DATA = src/util/ErrorUtils.java src/util/Globals.java src/util/Mappings.java
 dist_man1_MANS = tmseg.1
 all: all-am
 
@@ -397,6 +414,132 @@ uninstall-dist_examplesDATA:
 	@list='$(dist_examples_DATA)'; test -n "$(examplesdir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(examplesdir)'; $(am__uninstall_files_from_dir)
+install-dist_jsource01DATA: $(dist_jsource01_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(dist_jsource01_DATA)'; test -n "$(jsource01dir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(jsource01dir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(jsource01dir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(jsource01dir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(jsource01dir)" || exit $$?; \
+	done
+
+uninstall-dist_jsource01DATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(dist_jsource01_DATA)'; test -n "$(jsource01dir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(jsource01dir)'; $(am__uninstall_files_from_dir)
+install-dist_jsource02DATA: $(dist_jsource02_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(dist_jsource02_DATA)'; test -n "$(jsource02dir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(jsource02dir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(jsource02dir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(jsource02dir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(jsource02dir)" || exit $$?; \
+	done
+
+uninstall-dist_jsource02DATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(dist_jsource02_DATA)'; test -n "$(jsource02dir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(jsource02dir)'; $(am__uninstall_files_from_dir)
+install-dist_jsource03DATA: $(dist_jsource03_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(dist_jsource03_DATA)'; test -n "$(jsource03dir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(jsource03dir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(jsource03dir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(jsource03dir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(jsource03dir)" || exit $$?; \
+	done
+
+uninstall-dist_jsource03DATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(dist_jsource03_DATA)'; test -n "$(jsource03dir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(jsource03dir)'; $(am__uninstall_files_from_dir)
+install-dist_jsource04DATA: $(dist_jsource04_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(dist_jsource04_DATA)'; test -n "$(jsource04dir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(jsource04dir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(jsource04dir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(jsource04dir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(jsource04dir)" || exit $$?; \
+	done
+
+uninstall-dist_jsource04DATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(dist_jsource04_DATA)'; test -n "$(jsource04dir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(jsource04dir)'; $(am__uninstall_files_from_dir)
+install-dist_jsource05DATA: $(dist_jsource05_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(dist_jsource05_DATA)'; test -n "$(jsource05dir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(jsource05dir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(jsource05dir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(jsource05dir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(jsource05dir)" || exit $$?; \
+	done
+
+uninstall-dist_jsource05DATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(dist_jsource05_DATA)'; test -n "$(jsource05dir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(jsource05dir)'; $(am__uninstall_files_from_dir)
+install-dist_jsource06DATA: $(dist_jsource06_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(dist_jsource06_DATA)'; test -n "$(jsource06dir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(jsource06dir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(jsource06dir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(jsource06dir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(jsource06dir)" || exit $$?; \
+	done
+
+uninstall-dist_jsource06DATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(dist_jsource06_DATA)'; test -n "$(jsource06dir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(jsource06dir)'; $(am__uninstall_files_from_dir)
 install-dist_modelsDATA: $(dist_models_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(dist_models_DATA)'; test -n "$(modelsdir)" || list=; \
@@ -418,27 +561,6 @@ uninstall-dist_modelsDATA:
 	@list='$(dist_models_DATA)'; test -n "$(modelsdir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(modelsdir)'; $(am__uninstall_files_from_dir)
-install-dist_pkgdataDATA: $(dist_pkgdata_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(dist_pkgdata_DATA)'; test -n "$(pkgdatadir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(pkgdatadir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(pkgdatadir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(pkgdatadir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(pkgdatadir)" || exit $$?; \
-	done
-
-uninstall-dist_pkgdataDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(dist_pkgdata_DATA)'; test -n "$(pkgdatadir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(pkgdatadir)'; $(am__uninstall_files_from_dir)
 install-dist_wekaDATA: $(dist_weka_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(dist_weka_DATA)'; test -n "$(wekadir)" || list=; \
@@ -501,7 +623,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(SCRIPTS) $(MANS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkgdatadir)" "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(examplesdir)" "$(DESTDIR)$(modelsdir)" "$(DESTDIR)$(pkgdatadir)" "$(DESTDIR)$(wekadir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkgdatadir)" "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(examplesdir)" "$(DESTDIR)$(jsource01dir)" "$(DESTDIR)$(jsource02dir)" "$(DESTDIR)$(jsource03dir)" "$(DESTDIR)$(jsource04dir)" "$(DESTDIR)$(jsource05dir)" "$(DESTDIR)$(jsource06dir)" "$(DESTDIR)$(modelsdir)" "$(DESTDIR)$(wekadir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -554,9 +676,11 @@ info: info-am
 
 info-am:
 
-install-data-am: install-dist_examplesDATA install-dist_modelsDATA \
-	install-dist_pkgdataDATA install-dist_pkgdataSCRIPTS \
-	install-dist_wekaDATA install-man
+install-data-am: install-dist_examplesDATA install-dist_jsource01DATA \
+	install-dist_jsource02DATA install-dist_jsource03DATA \
+	install-dist_jsource04DATA install-dist_jsource05DATA \
+	install-dist_jsource06DATA install-dist_modelsDATA \
+	install-dist_pkgdataSCRIPTS install-dist_wekaDATA install-man
 
 install-dvi: install-dvi-am
 
@@ -601,9 +725,11 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-dist_binSCRIPTS uninstall-dist_examplesDATA \
-	uninstall-dist_modelsDATA uninstall-dist_pkgdataDATA \
-	uninstall-dist_pkgdataSCRIPTS uninstall-dist_wekaDATA \
-	uninstall-man
+	uninstall-dist_jsource01DATA uninstall-dist_jsource02DATA \
+	uninstall-dist_jsource03DATA uninstall-dist_jsource04DATA \
+	uninstall-dist_jsource05DATA uninstall-dist_jsource06DATA \
+	uninstall-dist_modelsDATA uninstall-dist_pkgdataSCRIPTS \
+	uninstall-dist_wekaDATA uninstall-man
 
 uninstall-man: uninstall-man1
 
@@ -613,17 +739,22 @@ uninstall-man: uninstall-man1
 	ctags-am distclean distclean-generic distdir dvi dvi-am html \
 	html-am info info-am install install-am install-data \
 	install-data-am install-dist_binSCRIPTS \
-	install-dist_examplesDATA install-dist_modelsDATA \
-	install-dist_pkgdataDATA install-dist_pkgdataSCRIPTS \
-	install-dist_wekaDATA install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-man install-man1 install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
-	pdf-am ps ps-am tags-am uninstall uninstall-am \
-	uninstall-dist_binSCRIPTS uninstall-dist_examplesDATA \
-	uninstall-dist_modelsDATA uninstall-dist_pkgdataDATA \
+	install-dist_examplesDATA install-dist_jsource01DATA \
+	install-dist_jsource02DATA install-dist_jsource03DATA \
+	install-dist_jsource04DATA install-dist_jsource05DATA \
+	install-dist_jsource06DATA install-dist_modelsDATA \
+	install-dist_pkgdataSCRIPTS install-dist_wekaDATA install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
+	install-man1 install-pdf install-pdf-am install-ps \
+	install-ps-am install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am tags-am \
+	uninstall uninstall-am uninstall-dist_binSCRIPTS \
+	uninstall-dist_examplesDATA uninstall-dist_jsource01DATA \
+	uninstall-dist_jsource02DATA uninstall-dist_jsource03DATA \
+	uninstall-dist_jsource04DATA uninstall-dist_jsource05DATA \
+	uninstall-dist_jsource06DATA uninstall-dist_modelsDATA \
 	uninstall-dist_pkgdataSCRIPTS uninstall-dist_wekaDATA \
 	uninstall-man uninstall-man1
 
