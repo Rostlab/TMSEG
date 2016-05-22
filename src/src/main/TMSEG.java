@@ -75,6 +75,9 @@ public class TMSEG {
 		//check all files
 		if (!checkFiles()) {return;}
 		
+		//load the predictors
+		loadPredictors();
+		
 		//run prediction(s)
 		if (doMultiJob)
 		{
@@ -91,10 +94,20 @@ public class TMSEG {
 			for (File file : fastaFolder.listFiles(fastaFilter))
 			{
 				String fastaFile 	= file.getAbsolutePath();
-				String rootPath 	= fastaFile.substring(0, fastaFile.length()-6);
-				String pssmFile 	= rootPath + ".pssm";
-				String outFile 		= rootPath + ".tmseg";
-				String outFileRaw 	= rootPath + ".tmseg-raw";
+				String fileName 	= new File(fastaFile).getName(); fileName = fileName.substring(0, fileName.length()-6);
+				String pssmFile 	= new File(pssmPath + "/" + fileName + ".pssm").getAbsolutePath();
+				String outFile 		= null;
+				String outFileRaw 	= null;
+				
+				if (outPath != null)
+				{
+					outFile = new File(outPath + "/" + fileName + ".tmseg").getAbsolutePath();
+				}
+				
+				if (outPathRaw != null)
+				{
+					outFileRaw = new File(outPathRaw + "/" + fileName + ".tmseg-raw").getAbsolutePath();
+				}
 				
 				doPrediction(fastaFile, pssmFile, outFile, outFileRaw);
 			}
@@ -145,9 +158,6 @@ public class TMSEG {
 			
 			return;
 		}
-		
-		//load the predictors
-		loadPredictors();
 		
 		//do standard prediction
 		if (!doAdjust)

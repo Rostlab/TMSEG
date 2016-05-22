@@ -1,7 +1,7 @@
 .\" Process this file with
 .\" groff -man -Tascii foo.1
 .\"
-.TH TMSEG 1 "2016-05-16" 2.2.0-1 "User Commands"
+.TH TMSEG 1 "2016-05-22" 2.2.1-1 "User Commands"
 .SH NAME
 tmseg \- predict transmembrane helices in proteins
 .SH SYNOPSIS
@@ -19,9 +19,7 @@ can be generated with PSI-BLAST (
 .B blastpgp
 ). The recommended parameters for such a profile are an e-value threshold
 of 1e\-3 for the profile (\-h 0.001), three iterations (\-j 3), and a
-deactivated low complexity filter (\-F F). A database of all proteins from
-SWISS-PROT, TrEMBL (http://www.uniprot.org/), and PDB (http://www.pdb.org),
-reduced to 80% sequence identity, was used during the evaluation.
+deactivated low complexity filter (\-F F). The UniRef90 cluster (http://www.uniprot.org/) was used during the evaluation.
 .LP
 Sample call:
 .br
