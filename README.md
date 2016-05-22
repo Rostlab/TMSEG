@@ -22,10 +22,9 @@ Then run `git lfs install` on each machine once. Then you don't need to worry ab
 
 Optional : you can choose to skip this step and use the pre-packed tmseg.jar in the first `/src/` folder
 
-A POM file lets you compile the latest version of the program with
-`maven install`
+An ANT script (build.xml) lets you compile the latest version of the program with
+`ant`
 
-The maven defaults will pack a jar file in the /target/ subdirectory.
 
 ## HOWTO RUN, Basics
 
