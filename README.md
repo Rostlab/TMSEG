@@ -1,7 +1,7 @@
 ###############
 # TMSEG
 ###############
-Stable version: `2.2.0`
+Stable version: `2.2.1`
 See Wiki for more info
 
 Muriel Keribin & Cyril Duchon-Doris for Protein Prediction II WinterSemester 2015-2016
@@ -11,6 +11,8 @@ TMSEG predicts transmembrane proteins (TMP) and transmembrane helices (TMH) usin
 ## HOWTO Install
 
 ### This repo uses git-lfs
+
+**Update**: Due to limited Git LFS quota, we now also host those files on the Rostlab FTP server at ftp://rostlab.org/tmseg/
 
 Some files are very large (model files for ML algorithms), and have been committed using git-lfs*. It is mandatory to install the git-lfs when cloning/pulling the repo. 
 Download and install [git-lfs](https://git-lfs.github.com/)
